@@ -1,0 +1,7 @@
+devdays.view:
+  path: '/microservice'
+  defaults:
+    _controller: '\Drupal\devdays\Controller\MicroserviceController::view'
+    _title: 'Microservice'
+  requirements:
+    _access: 'TRUE'

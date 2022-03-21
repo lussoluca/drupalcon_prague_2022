@@ -1,0 +1,9 @@
+vendor
+web/core
+web/webprofiler1
+web/webprofiler2
+web/modules/custom/webprofiler
+web/modules/custom/o11y
+web/modules/custom/monolog
+web/sites/default/files
+.ddev/grafana/positions.yaml

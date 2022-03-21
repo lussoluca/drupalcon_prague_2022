@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  microservice:
+    container_name: ddev-${DDEV_PROJECT}-microservice
+    entrypoint:
+      - /bin/sh
+    hostname: ${DDEV_PROJECT}-microservice
+    image: golang:alpine
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME

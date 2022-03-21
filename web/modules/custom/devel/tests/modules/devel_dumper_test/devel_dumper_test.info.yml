@@ -1,0 +1,5 @@
+name: 'Devel dumper test module'
+type: module
+description: 'Test pluggable dumpers.'
+package: Testing
+core_version_requirement: ^8.8 || ^9

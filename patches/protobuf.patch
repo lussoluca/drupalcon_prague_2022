@@ -1,0 +1,354 @@
+diff --git a/protobuf/src/Google/Protobuf/Internal/GPBWire.php b/protobuf/src/Google/Protobuf/Internal/GPBWire.php
+index 29569530fd..034f5df92e 100644
+--- a/protobuf/src/Google/Protobuf/Internal/GPBWire.php
++++ b/protobuf/src/Google/Protobuf/Internal/GPBWire.php
+@@ -146,7 +146,7 @@ public static function zigZagEncode64($int64)
+                 return bcsub(bcmul(bcsub(0, $int64), 2), 1);
+             }
+         } else {
+-            return ($int64 << 1) ^ ($int64 >> 63);
++            return ((int)$int64 << 1) ^ ((int)$int64 >> 63);
+         }
+     }
+
+diff --git a/protobuf/src/Google/Protobuf/Internal/MapField.php b/protobuf/src/Google/Protobuf/Internal/MapField.php
+index 719fb350bd..20ac6c2d66 100644
+--- a/protobuf/src/Google/Protobuf/Internal/MapField.php
++++ b/protobuf/src/Google/Protobuf/Internal/MapField.php
+@@ -37,6 +37,8 @@
+
+ namespace Google\Protobuf\Internal;
+
++use Traversable;
++
+ /**
+  * MapField is used by generated protocol message classes to manipulate map
+  * fields. It can be used like native PHP array.
+@@ -134,6 +136,7 @@ public function getLegacyValueClass()
+      * @throws \ErrorException Invalid type for index.
+      * @throws \ErrorException Non-existing index.
+      */
++    #[\ReturnTypeWillChange]
+     public function offsetGet($key)
+     {
+         return $this->container[$key];
+@@ -151,7 +154,7 @@ public function offsetGet($key)
+      * @throws \ErrorException Invalid type for value.
+      * @throws \ErrorException Non-existing key.
+      */
+-    public function offsetSet($key, $value)
++    public function offsetSet($key, $value): void
+     {
+         $this->checkKey($this->key_type, $key);
+
+@@ -209,7 +212,7 @@ public function offsetSet($key, $value)
+      * @return void
+      * @throws \ErrorException Invalid type for key.
+      */
+-    public function offsetUnset($key)
++    public function offsetUnset($key): void
+     {
+         $this->checkKey($this->key_type, $key);
+         unset($this->container[$key]);
+@@ -224,7 +227,7 @@ public function offsetUnset($key)
+      * @return bool True if the element at the given key exists.
+      * @throws \ErrorException Invalid type for key.
+      */
+-    public function offsetExists($key)
++    public function offsetExists($key): bool
+     {
+         $this->checkKey($this->key_type, $key);
+         return isset($this->container[$key]);
+@@ -233,7 +236,7 @@ public function offsetExists($key)
+     /**
+      * @ignore
+      */
+-    public function getIterator()
++    public function getIterator(): Traversable
+     {
+         return new MapFieldIter($this->container, $this->key_type);
+     }
+@@ -245,7 +248,7 @@ public function getIterator()
+      *
+      * @return integer The number of stored elements.
+      */
+-    public function count()
++    public function count(): int
+     {
+         return count($this->container);
+     }
+diff --git a/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php b/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
+index 4e18005ea8..8370787876 100644
+--- a/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
++++ b/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
+@@ -68,9 +68,9 @@ public function __construct($container, $key_type)
+      *
+      * @return void
+      */
+-    public function rewind()
++    public function rewind(): void
+     {
+-        return reset($this->container);
++        reset($this->container);
+     }
+
+     /**
+@@ -78,6 +78,7 @@ public function rewind()
+      *
+      * @return object The element at the current position.
+      */
++    #[\ReturnTypeWillChange]
+     public function current()
+     {
+         return current($this->container);
+@@ -88,6 +89,7 @@ public function current()
+      *
+      * @return object The current key.
+      */
++    #[\ReturnTypeWillChange]
+     public function key()
+     {
+         $key = key($this->container);
+@@ -117,9 +119,9 @@ public function key()
+      *
+      * @return void
+      */
+-    public function next()
++    public function next(): void
+     {
+-        return next($this->container);
++        next($this->container);
+     }
+
+     /**
+@@ -127,7 +129,7 @@ public function next()
+      *
+      * @return bool True if there are more elements to iterate.
+      */
+-    public function valid()
++    public function valid(): bool
+     {
+         return key($this->container) !== null;
+     }
+diff --git a/protobuf/src/Google/Protobuf/Internal/RepeatedField.php b/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
+index c0331ff38e..e589b644fe 100644
+--- a/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
++++ b/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
+@@ -39,6 +39,7 @@
+
+ use Google\Protobuf\Internal\GPBType;
+ use Google\Protobuf\Internal\GPBUtil;
++use Traversable;
+
+ /**
+  * RepeatedField is used by generated protocol message classes to manipulate
+@@ -121,6 +122,7 @@ public function getLegacyClass()
+      * @throws \ErrorException Invalid type for index.
+      * @throws \ErrorException Non-existing index.
+      */
++    #[\ReturnTypeWillChange]
+     public function offsetGet($offset)
+     {
+         return $this->container[$offset];
+@@ -138,7 +140,7 @@ public function offsetGet($offset)
+      * @throws \ErrorException Non-existing index.
+      * @throws \ErrorException Incorrect type of the element.
+      */
+-    public function offsetSet($offset, $value)
++    public function offsetSet($offset, $value): void
+     {
+         switch ($this->type) {
+             case GPBType::SFIXED32:
+@@ -209,7 +211,7 @@ public function offsetSet($offset, $value)
+      * @throws \ErrorException The element to be removed is not at the end of the
+      * RepeatedField.
+      */
+-    public function offsetUnset($offset)
++    public function offsetUnset($offset): void
+     {
+         $count = count($this->container);
+         if (!is_numeric($offset) || $count === 0 || $offset !== $count - 1) {
+@@ -230,7 +232,7 @@ public function offsetUnset($offset)
+      * @return bool True if the element at the given offset exists.
+      * @throws \ErrorException Invalid type for index.
+      */
+-    public function offsetExists($offset)
++    public function offsetExists($offset): bool
+     {
+         return isset($this->container[$offset]);
+     }
+@@ -238,7 +240,7 @@ public function offsetExists($offset)
+     /**
+      * @ignore
+      */
+-    public function getIterator()
++    public function getIterator(): Traversable
+     {
+         return new RepeatedFieldIter($this->container);
+     }
+@@ -250,7 +252,7 @@ public function getIterator()
+      *
+      * @return integer The number of stored elements.
+      */
+-    public function count()
++    public function count(): int
+     {
+         return count($this->container);
+     }
+diff --git a/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php b/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
+index 2b6f82309b..ad86f95f94 100644
+--- a/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
++++ b/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
+@@ -71,7 +71,7 @@ public function __construct($container)
+      *
+      * @return void
+      */
+-    public function rewind()
++    public function rewind(): void
+     {
+         $this->position = 0;
+     }
+@@ -81,6 +81,7 @@ public function rewind()
+      *
+      * @return object The element at the current position.
+      */
++    #[\ReturnTypeWillChange]
+     public function current()
+     {
+         return $this->container[$this->position];
+@@ -91,6 +92,7 @@ public function current()
+      *
+      * @return integer The current position.
+      */
++    #[\ReturnTypeWillChange]
+     public function key()
+     {
+         return $this->position;
+@@ -101,7 +103,7 @@ public function key()
+      *
+      * @return void
+      */
+-    public function next()
++    public function next(): void
+     {
+         ++$this->position;
+     }
+@@ -111,7 +113,7 @@ public function next()
+      *
+      * @return bool True if there are more elements to iterate.
+      */
+-    public function valid()
++    public function valid(): bool
+     {
+         return isset($this->container[$this->position]);
+     }
+
+diff --git a/protobuf/src/Google/Protobuf/Internal/GPBUtil.php b/protobuf/src/Google/Protobuf/Internal/GPBUtil.php
+index 1dd6645bcd..b71246e81d 100644
+--- a/protobuf/src/Google/Protobuf/Internal/GPBUtil.php
++++ b/protobuf/src/Google/Protobuf/Internal/GPBUtil.php
+@@ -37,6 +37,7 @@
+ use Google\Protobuf\Internal\GPBType;
+ use Google\Protobuf\Internal\RepeatedField;
+ use Google\Protobuf\Internal\MapField;
++use function bccomp;
+
+ function camel2underscore($input) {
+     preg_match_all(
+
+diff --git a/protobuf/src/Google/Protobuf/Internal/MapField.php b/protobuf/src/Google/Protobuf/Internal/MapField.php
+index 20ac6c2d66..86463a9a47 100644
+--- a/protobuf/src/Google/Protobuf/Internal/MapField.php
++++ b/protobuf/src/Google/Protobuf/Internal/MapField.php
+@@ -154,7 +154,8 @@ public function offsetGet($key)
+      * @throws \ErrorException Invalid type for value.
+      * @throws \ErrorException Non-existing key.
+      */
+-    public function offsetSet($key, $value): void
++    #[\ReturnTypeWillChange]
++    public function offsetSet($key, $value)
+     {
+         $this->checkKey($this->key_type, $key);
+
+@@ -212,7 +213,8 @@ public function offsetSet($key, $value): void
+      * @return void
+      * @throws \ErrorException Invalid type for key.
+      */
+-    public function offsetUnset($key): void
++    #[\ReturnTypeWillChange]
++    public function offsetUnset($key)
+     {
+         $this->checkKey($this->key_type, $key);
+         unset($this->container[$key]);
+diff --git a/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php b/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
+index 8370787876..a3c834bd2c 100644
+--- a/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
++++ b/protobuf/src/Google/Protobuf/Internal/MapFieldIter.php
+@@ -68,7 +68,8 @@ public function __construct($container, $key_type)
+      *
+      * @return void
+      */
+-    public function rewind(): void
++    #[\ReturnTypeWillChange]
++    public function rewind()
+     {
+         reset($this->container);
+     }
+@@ -119,7 +120,8 @@ public function key()
+      *
+      * @return void
+      */
+-    public function next(): void
++    #[\ReturnTypeWillChange]
++    public function next()
+     {
+         next($this->container);
+     }
+diff --git a/protobuf/src/Google/Protobuf/Internal/RepeatedField.php b/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
+index e589b644fe..704123ad15 100644
+--- a/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
++++ b/protobuf/src/Google/Protobuf/Internal/RepeatedField.php
+@@ -140,7 +140,8 @@ public function offsetGet($offset)
+      * @throws \ErrorException Non-existing index.
+      * @throws \ErrorException Incorrect type of the element.
+      */
+-    public function offsetSet($offset, $value): void
++    #[\ReturnTypeWillChange]
++    public function offsetSet($offset, $value)
+     {
+         switch ($this->type) {
+             case GPBType::SFIXED32:
+@@ -211,7 +212,8 @@ public function offsetSet($offset, $value): void
+      * @throws \ErrorException The element to be removed is not at the end of the
+      * RepeatedField.
+      */
+-    public function offsetUnset($offset): void
++    #[\ReturnTypeWillChange]
++    public function offsetUnset($offset)
+     {
+         $count = count($this->container);
+         if (!is_numeric($offset) || $count === 0 || $offset !== $count - 1) {
+diff --git a/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php b/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
+index ad86f95f94..3c85869989 100644
+--- a/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
++++ b/protobuf/src/Google/Protobuf/Internal/RepeatedFieldIter.php
+@@ -71,7 +71,8 @@ public function __construct($container)
+      *
+      * @return void
+      */
+-    public function rewind(): void
++    #[\ReturnTypeWillChange]
++    public function rewind()
+     {
+         $this->position = 0;
+     }
+@@ -103,7 +104,8 @@ public function key()
+      *
+      * @return void
+      */
+-    public function next(): void
++    #[\ReturnTypeWillChange]
++    public function next()
+     {
+         ++$this->position;
+     }
