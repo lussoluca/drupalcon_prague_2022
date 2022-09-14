@@ -51,7 +51,7 @@ class DevelClientSideFilterTableTest extends UnitTestCase {
   /**
    * Data provider for preRenderHtmlTag test.
    */
-  public function providerPreRenderTable() {
+  public function providerPreRenderTable(): array {
     $data = [];
 
     $t = $this->getStringTranslationStub();

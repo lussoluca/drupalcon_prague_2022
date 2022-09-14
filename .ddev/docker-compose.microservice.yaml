@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  microservice:
+    container_name: ddev-${DDEV_PROJECT}-microservice
+    command: ./microservice
+    working_dir: /var/www/html/microservice
+    hostname: ${DDEV_PROJECT}-microservice
+    image: alpine
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://collector:4318/v1/traces
+    volumes:
+      - '.:/mnt/ddev_config'
+      - '../:/var/www/html'

@@ -53,7 +53,7 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
   /**
    * Prepares the testing environment.
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->setUpData();
   }
@@ -84,7 +84,7 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
       'languages' => 'fr',
     ]);
     $term = Term::load(60);
-    $this->assertEquals($term->language()->getId(), 'fr');
+    $this->assertEquals('fr', $term->language()->getId());
 
     // Make sure terms gets created, with proper translation.
     $this->drush('devel-generate-terms', [10], [
@@ -155,7 +155,7 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
     $this->drush('devel-generate-content', [10], ['kill' => NULL, 'languages' => 'fr']);
     $nodes = \Drupal::entityQuery('node')->execute();
     $node = Node::load(end($nodes));
-    $this->assertEquals($node->language()->getId(), 'fr');
+    $this->assertEquals('fr', $node->language()->getId());
 
     // Generate content with translations.
     $this->drush('devel-generate-content', [18], [

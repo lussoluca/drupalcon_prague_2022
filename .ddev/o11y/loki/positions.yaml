@@ -1,0 +1,5 @@
+positions:
+  /var/www/html/microservice/logs/microservice.log: "57348"
+  /var/www/html/web/sites/default/files/private/logs/debug-2022-09-12.log: "157523"
+  /var/www/html/web/sites/default/files/private/logs/debug-2022-09-13.log: "929209"
+  /var/www/html/web/sites/default/files/private/logs/debug-2022-09-14.log: "536336"

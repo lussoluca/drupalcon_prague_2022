@@ -6,6 +6,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Update\UpdateHookRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -65,7 +66,7 @@ class DevelReinstall extends FormBase {
     $modules = $this->moduleExtensionList->reset()->getList();
 
     $uninstallable = array_filter($modules, function ($module) use ($modules) {
-      return empty($modules[$module->getName()]->info['required']) && drupal_get_installed_schema_version($module->getName()) > SCHEMA_UNINSTALLED && $module->getName() !== 'devel';
+      return empty($modules[$module->getName()]->info['required']) && \Drupal::service('update.update_hook_registry')->getInstalledVersion($module->getName()) > UpdateHookRegistry::SCHEMA_UNINSTALLED && $module->getName() !== 'devel';
     });
 
     $form['filters'] = [

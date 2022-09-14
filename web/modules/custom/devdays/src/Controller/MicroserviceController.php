@@ -8,14 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MicroserviceController extends ControllerBase {
 
-  /**
-   * @var \GuzzleHttp\Client
-   */
   private Client $httpClient;
 
-  /**
-   * {@inheritdoc}
-   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('http_client')
@@ -27,12 +21,47 @@ class MicroserviceController extends ControllerBase {
   }
 
   public function view() {
-    $response = $this->httpClient->get('https://google.com');
+    try {
+      $response = $this->httpClient->get('http://ddev-drupal10-microservice:8080/hello-instrumented');
+      $json = json_decode($response->getBody()->getContents());
+      $this->getLogger('devdays')->notice($json->message);
 
-    return [
-      '#type' => 'markup',
-      '#markup' => $this->t('Hello, World!'),
-    ];
+      $this->someComplexMethod();
+
+      return [
+        '#type' => 'markup',
+        '#markup' => $json->message,
+        '#cache' => [
+          'max-age' => 0,
+        ],
+      ];
+    }
+    catch (\Exception $e) {
+      return [
+        '#type' => 'markup',
+        '#markup' => $e->getMessage(),
+        '#cache' => [
+          'max-age' => 0,
+        ],
+      ];
+    }
+  }
+
+  private function someComplexMethod() {
+    /** @var \Drupal\tracer\TracerInterface $tracer */
+    $tracer = \Drupal::service('tracer.tracer');
+
+    $span = $tracer->start(
+      'custom',
+      'someComplexMethod',
+      ['someAttribute' => 'someValue']
+    );
+
+    $this->getLogger('devdays')->info('someComplexMethod start');
+    sleep(1);
+    $this->getLogger('devdays')->info('someComplexMethod start');
+
+    $tracer->stop($span);
   }
 
 }

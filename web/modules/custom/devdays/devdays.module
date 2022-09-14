@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_cron().
+ */
+function devdays_cron() {
+  \Drupal::logger('devdays')->notice('test');
+}

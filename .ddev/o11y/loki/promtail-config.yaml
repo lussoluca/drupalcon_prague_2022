@@ -1,0 +1,43 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /mnt/ddev_config/o11y/loki/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: drupal
+    pipeline_stages:
+      - json:
+          expressions:
+            level: level_name
+            uid: extra.uid
+      - labels:
+          level:
+          uid:
+      - static_labels:
+          filename: 'drupal.log'
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: drupal
+          __path__: /var/www/html/web/sites/default/files/private/logs/*log
+  - job_name: microservice
+    pipeline_stages:
+      - json:
+          expressions:
+            level: level
+      - labels:
+          level:
+      - static_labels:
+          filename: 'microservice.log'
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: microservice
+          __path__: /var/www/html/microservice/logs/microservice.log

@@ -31,7 +31,7 @@ class DevelQueryDebugTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installSchema('system', 'sequences');
@@ -40,6 +40,7 @@ class DevelQueryDebugTest extends KernelTestBase {
 
     $devel_role = Role::create([
       'id' => 'admin',
+      'label' => 'Admin',
       'permissions' => ['access devel information'],
     ]);
     $devel_role->save();

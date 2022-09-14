@@ -1,0 +1,12 @@
+parameters:
+    ignoreErrors:
+      - "#Unsafe usage of new static#"
+    level: 5
+    paths:
+      - %currentWorkingDirectory%/web/modules/custom/webprofiler
+    scanDirectories:
+      - %currentWorkingDirectory%/web/modules/custom/devel
+      - %currentWorkingDirectory%/web/modules/custom/tracer
+      - %currentWorkingDirectory%/web/core
+    scanFiles:
+      - %currentWorkingDirectory%/web/core/includes/theme.inc

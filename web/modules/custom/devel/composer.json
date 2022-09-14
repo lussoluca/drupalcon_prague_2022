@@ -10,11 +10,11 @@
   "license": "GPL-2.0-or-later",
   "prefer-stable": true,
   "require": {
-    "symfony/var-dumper": "^4 || ^5",
+    "symfony/var-dumper": "^4 || ^5 || ^6",
     "doctrine/common": "^2.7"
   },
   "require-dev": {
-    "drush/drush": "^10"
+    "drush/drush": "^11"
   },
   "suggest": {
     "kint-php/kint": "Kint provides an informative display of arrays/objects. Useful for debugging and developing."

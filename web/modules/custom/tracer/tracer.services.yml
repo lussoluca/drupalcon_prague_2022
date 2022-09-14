@@ -1,0 +1,35 @@
+services:
+  plugin.manager.tracer:
+    class: Drupal\tracer\TracerPluginManager
+    parent: default_plugin_manager
+
+  tracer.tracer_factory:
+    class: Drupal\tracer\TracerFactory
+    arguments: ['@plugin.manager.tracer', '@settings']
+
+  tracer.tracer:
+    class: Drupal\tracer\TracerInterface
+    factory: ['@tracer.tracer_factory', 'getTracer']
+
+  http_middleware.tracer:
+    class: Drupal\tracer\StackMiddleware\TracesMiddleware
+    tags:
+      - { name: http_middleware, priority: 350 }
+
+  http_client_middleware.tracer:
+    class: Drupal\tracer\Http\HttpClientMiddleware
+    tags:
+      - { name: http_client_middleware }
+
+  tracer.twig_profile:
+    class: Twig\Profiler\Profile
+
+  tracer.twig.extension.profiler:
+    class: Drupal\tracer\Twig\Extension\TraceableProfilerExtension
+    arguments: [ '@tracer.twig_profile' ]
+    tags:
+      - { name: twig.extension, priority: 100 }
+
+  tracer.debug.controller_resolver:
+    class: Drupal\tracer\Controller\TraceableControllerResolver
+    arguments: [ '@controller_resolver' ]

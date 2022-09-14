@@ -15,17 +15,30 @@
         }
     ],
     "require": {
+        "behat/mink": "^1.10",
+        "behat/mink-goutte-driver": "^2.0",
         "composer/installers": "^1.9",
         "drupal/address": "^1.7",
-        "drupal/core-composer-scaffold": "10.0.0-alpha2",
-        "drupal/core-project-message": "10.0.0-alpha2",
-        "drupal/core-recommended": "10.0.0-alpha2",
+        "drupal/core-composer-scaffold": "10.0.0-alpha7",
+        "drupal/core-project-message": "10.0.0-alpha7",
+        "drupal/core-recommended": "10.0.0-alpha7",
         "drupal/entity_reference_revisions": "~1.0",
+        "drupal/externalauth": "^2.0",
         "drush/drush": "^11.0",
-        "monolog/monolog": "^2.3",
-        "open-telemetry/opentelemetry": "^0.0.6",
+        "lcobucci/jwt": "^4.1",
+        "monolog/monolog": "^3.2.0",
+        "nette/php-generator": "^4.0",
+        "open-telemetry/opentelemetry": "^0.0.15",
         "php-http/guzzle7-adapter": "^1.0",
-        "symfony/stopwatch": "^6.0"
+        "phpspec/prophecy": "^1.15",
+        "phpstan/phpstan": "1.8.2",
+        "phpunit/phpunit": "^9.5",
+        "symfony/phpunit-bridge": "^6.0",
+        "symfony/property-access": "^6.1",
+        "symfony/property-info": "^6.1",
+        "symfony/stopwatch": "^6.0",
+        "drupal/pcb": "^3.0",
+        "promphp/prometheus_client_php": "v2.6.1"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -37,7 +50,8 @@
         "allow-plugins": {
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
-            "drupal/core-project-message": true
+            "drupal/core-project-message": true,
+            "cweagans/composer-patches": true
         }
     },
     "extra": {
@@ -96,5 +110,8 @@
                 "      composer remove drupal/core-project-message"
             ]
         }
+    },
+    "require-dev": {
+        "phpspec/prophecy-phpunit": "^2"
     }
 }

@@ -14,7 +14,7 @@ class DevelMenuLinksTest extends DevelBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     // Devel links currently appears only in the devel menu.
     // Place the devel menu block so we can ensure that these link works

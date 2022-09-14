@@ -1,0 +1,7 @@
+global:
+  scrape_interval:
+scrape_configs:
+  - job_name: 'drupal'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['web:80']

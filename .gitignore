@@ -1,9 +1,10 @@
 vendor
 web/core
-web/webprofiler1
-web/webprofiler2
-web/modules/custom/webprofiler
-web/modules/custom/o11y
-web/modules/custom/monolog
+web/modules/contrib
 web/sites/default/files
-.ddev/grafana/positions.yaml
+.ddev/o11y/grafana/data
+.ddev/o11y/loki/data
+.ddev/o11y/prometheus/data
+.ddev/o11y/tempo/data
+.vscode
+microservice/logs/*.log

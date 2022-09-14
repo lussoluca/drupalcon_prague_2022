@@ -23,7 +23,7 @@ class DevelEnforcedDependenciesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->installEntitySchema('user');
@@ -36,7 +36,7 @@ class DevelEnforcedDependenciesTest extends KernelTestBase {
    * Tests devel menu enforced dependencies.
    */
   public function testMenuEnforcedDependencies() {
-    /* @var \Drupal\Core\Config\ConfigManagerInterface $config_manager */
+    /** @var \Drupal\Core\Config\ConfigManagerInterface $config_manager */
     $config_manager = $this->container->get('config.manager');
 
     // Ensure that the Devel menu has explicit enforced dependencies on devel

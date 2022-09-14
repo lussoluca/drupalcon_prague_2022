@@ -1,24 +1,74 @@
 version: '3.6'
 services:
-  grafana-agent:
-    container_name: ddev-${DDEV_PROJECT}-grafana-agent
-    entrypoint:
-      - /bin/agent
-      - -config.file=/mnt/ddev_config/grafana/agent/agent-config.yaml
-      - -metrics.wal-directory=/tmp/agent/wal
-      - -server.http-listen-address=127.0.0.1
-      - -server.http-listen-port=12345
-    hostname: ${DDEV_PROJECT}-grafana-agent
-    image: grafana/agent
+  grafana:
+    container_name: ddev-${DDEV_PROJECT}-grafana
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=3000:3000
+      - HTTPS_EXPOSE=3001:3000
     expose:
-      - '12345'
+      - '3000'
+    hostname: ${DDEV_PROJECT}-grafana
+    image: grafana/grafana-oss:9.1.4
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - './o11y/grafana/data:/var/lib/grafana'
+  loki:
+    command: -config.file=/mnt/ddev_config/o11y/loki/loki-config.yaml
+    container_name: ddev-${DDEV_PROJECT}-loki
+    hostname: ${DDEV_PROJECT}-loki
+    image: grafana/loki:2.5.0
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - '.:/mnt/ddev_config'
+  promtail:
+    command: -config.file=/mnt/ddev_config/o11y/loki/promtail-config.yaml
+    container_name: ddev-${DDEV_PROJECT}-promtail
     environment:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
-      - HTTP_EXPOSE=12345:12345
-      - HTTPS_EXPOSE=12346:12345
+    hostname: ${DDEV_PROJECT}-promtail
+    image: grafana/promtail:2.5.0
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
     volumes:
       - '.:/mnt/ddev_config'
       - '../:/var/www/html'
+  tempo:
+    command: "-config.file=/etc/tempo.yaml"
+    container_name: ddev-${DDEV_PROJECT}-tempo
+    hostname: ${DDEV_PROJECT}-tempo
+    image: grafana/tempo:1.3.0
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - '.:/mnt/ddev_config'
+      - './o11y/tempo/tempo.yaml:/etc/tempo.yaml'
+      - './o11y/tempo/data:/tmp/tempo'
+  prometheus:
+    container_name: ddev-${DDEV_PROJECT}-prometheus
+    hostname: ${DDEV_PROJECT}-prometheus
+    image: prom/prometheus
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - '.:/mnt/ddev_config'
+      - './o11y/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml'
+      - './o11y/prometheus/data:/prometheus'
+  collector:
+    command: "--config /etc/otel-config.yaml"
+    container_name: ddev-${DDEV_PROJECT}-collector
+    hostname: ${DDEV_PROJECT}-collector
+    image: otel/opentelemetry-collector:0.59.0
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - '.:/mnt/ddev_config'
+      - './o11y/otel-config.yaml:/etc/otel-config.yaml'

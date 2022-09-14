@@ -791,3 +791,15 @@ $ddev_settings = dirname(__FILE__) . '/settings.ddev.php';
 if (getenv('IS_DDEV_PROJECT') == 'true' && is_readable($ddev_settings)) {
   require $ddev_settings;
 }
+
+$class_loader->addPsr4('Drupal\\tracer\\', [ __DIR__ . '/../../modules/custom/tracer/src']);
+$settings['container_base_class'] = '\Drupal\tracer\DependencyInjection\TraceableContainer';
+
+$settings['tracer_plugin'] = 'o11y_tracer';
+//$settings['tracer_plugin'] = 'stopwatch_tracer';
+
+// Include settings required for Redis cache.
+if ((file_exists(__DIR__ . '/settings.ddev.redis.php') && getenv('IS_DDEV_PROJECT') == 'true')) {
+  include __DIR__ . '/settings.ddev.redis.php';
+}
+

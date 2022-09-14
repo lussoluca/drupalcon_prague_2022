@@ -17,7 +17,7 @@ class DevelLayoutInfoTest extends DevelBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->drupalPlaceBlock('page_title_block');
     $this->drupalLogin($this->develUser);
@@ -52,7 +52,7 @@ class DevelLayoutInfoTest extends DevelBrowserTestBase {
     $this->assertNotNull($table);
 
     // Ensures that the expected table headers are found.
-    /* @var $headers \Behat\Mink\Element\NodeElement[] */
+    /** @var \Behat\Mink\Element\NodeElement[] $headers */
     $headers = $table->findAll('css', 'thead th');
     $this->assertEquals(6, count($headers));
 

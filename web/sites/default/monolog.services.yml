@@ -4,9 +4,29 @@ parameters:
       handlers:
         - name: 'rotating_file'
           formatter: 'json'
-          processors: ['current_user', 'tracer', 'message_placeholder', 'current_user', 'request_uri', 'ip', 'referer', 'filter_backtrace']
+#        - name: 'drupal.dblog'
+#          processors:
+#            - 'current_user'
+#            - 'request_uri'
+#            - 'ip'
+#            - 'referer'
+#        - name: 'mail'
+#        - name: 'std_out'
+#          formatter: 'drush'
+#        - name: 'std_err'
+#          formatter: 'drush'
+  monolog.processors: ['current_user', 'introspection', 'message_placeholder', 'request_uri', 'ip', 'referer', 'filter_backtrace', 'tracer']
 
 services:
   monolog.handler.rotating_file:
     class: Monolog\Handler\RotatingFileHandler
-    arguments: ['private://logs/debug.log', 10, '%monolog.level.debug%']
+    arguments: ['private://logs/debug.log', 10, 'DEBUG']
+#  monolog.handler.mail:
+#    class: Drupal\monolog\Logger\Handler\DrupalMailHandler
+#    arguments: [ 'mail@example.com', 'DEBUG' ]
+#  monolog.handler.std_err:
+#    class: Monolog\Handler\StreamHandler
+#    arguments: [ 'php://stderr', 'ERROR', false ]
+#  monolog.handler.std_out:
+#    class: Monolog\Handler\StreamHandler
+#    arguments: [ 'php://stdout', 'DEBUG' ]

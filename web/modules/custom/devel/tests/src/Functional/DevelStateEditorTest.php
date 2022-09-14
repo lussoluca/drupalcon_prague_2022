@@ -21,7 +21,7 @@ class DevelStateEditorTest extends DevelBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->state = $this->container->get('state');
     $this->drupalPlaceBlock('page_title_block');

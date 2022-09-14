@@ -5,3 +5,11 @@ devdays.view:
     _title: 'Microservice'
   requirements:
     _access: 'TRUE'
+
+devdays.error:
+  path: '/error'
+  defaults:
+    _controller: '\Drupal\devdays\Controller\ErrorController::view'
+    _title: 'Error'
+  requirements:
+    _access: 'TRUE'

@@ -42,7 +42,7 @@ class DevelSwitchUserTest extends DevelBrowserTestBase {
   /**
    * Set up test.
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->block = $this->drupalPlaceBlock('devel_switch_user', ['id' => 'switch-user', 'label' => 'Switch Hit']);
@@ -271,7 +271,7 @@ class DevelSwitchUserTest extends DevelBrowserTestBase {
    * @param int $uid
    *   The user ID for which to find a session record.
    *
-   * @TODO find a cleaner way to do this check.
+   * @todo find a cleaner way to do this check.
    */
   protected function assertSessionByUid($uid) {
     $query = \Drupal::database()->select('sessions');
@@ -292,7 +292,7 @@ class DevelSwitchUserTest extends DevelBrowserTestBase {
    * @param int $uid
    *   The user ID to assert.
    *
-   * @TODO find a cleaner way to do this check.
+   * @todo find a cleaner way to do this check.
    */
   protected function assertNoSessionByUid($uid) {
     $query = \Drupal::database()->select('sessions');
