@@ -10,3 +10,5 @@ parameters:
       - %currentWorkingDirectory%/web/core
     scanFiles:
       - %currentWorkingDirectory%/web/core/includes/theme.inc
+    excludePaths:
+      - %currentWorkingDirectory%/web/modules/custom/webprofiler/src/Render/TraceableBigPipe.php
