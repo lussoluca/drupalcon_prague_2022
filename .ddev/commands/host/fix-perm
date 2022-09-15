@@ -1,0 +1,5 @@
+#!/bin/bash
+
+chmod 777 .ddev/o11y/grafana/data
+chmod 777 .ddev/o11y/prometheus/data
+chmod 777 .ddev/o11y/loki/data

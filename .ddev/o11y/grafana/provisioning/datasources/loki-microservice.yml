@@ -16,4 +16,4 @@ datasources:
       - datasourceUid: tempo
         matcherRegex: "{.*\"traceId\":\"(.*)\"}"
         name: TraceID
-        url: ${__value.raw}
+        url: "$${__value.raw}"

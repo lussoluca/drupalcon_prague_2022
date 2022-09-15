@@ -69,7 +69,9 @@
         "exemplars": {
           "color": "rgba(255,0,255,0.7)"
         },
-        "filterValues": {},
+        "filterValues": {
+          "le": -1
+        },
         "legend": {
           "show": true
         },
@@ -598,6 +600,6 @@
   "timezone": "",
   "title": "Drupal",
   "uid": "LNfVlf3nk",
-  "version": 6,
+  "version": 1,
   "weekStart": ""
 }
