@@ -15,6 +15,7 @@ services:
       com.ddev.approot: $DDEV_APPROOT
     volumes:
       - './o11y/grafana/data:/var/lib/grafana'
+      - './o11y/grafana/provisioning:/etc/grafana/provisioning'
   loki:
     command: -config.file=/mnt/ddev_config/o11y/loki/loki-config.yaml
     container_name: ddev-${DDEV_PROJECT}-loki

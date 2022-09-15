@@ -24,14 +24,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "60lAh9GVz"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -92,7 +91,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "60lAh9GVz"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -100,6 +99,7 @@
           "format": "heatmap",
           "hide": false,
           "instant": false,
+          "interval": "",
           "legendFormat": "{{le}}",
           "range": true,
           "refId": "A"
@@ -111,7 +111,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "60lAh9GVz"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -188,7 +188,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "60lAh9GVz"
+            "uid": "prometheus"
           },
           "editorMode": "builder",
           "expr": "drupal_user_count_total",
@@ -204,7 +204,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "60lAh9GVz"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -281,7 +281,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "60lAh9GVz"
+            "uid": "prometheus"
           },
           "editorMode": "builder",
           "expr": "drupal_node_count_total_per_bundle",
@@ -298,7 +298,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "ByjB8Bqnk"
+        "uid": "loki_drupal"
       },
       "description": "",
       "fieldConfig": {
@@ -509,7 +509,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "ByjB8Bqnk"
+        "uid": "loki_drupal"
       },
       "gridPos": {
         "h": 18,
@@ -533,7 +533,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "ByjB8Bqnk"
+            "uid": "loki_drupal"
           },
           "editorMode": "builder",
           "expr": "{job=\"drupal\"} |= `` | json",
@@ -548,7 +548,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "TeHIR3G4z"
+        "uid": "loki_microservice"
       },
       "gridPos": {
         "h": 18,
@@ -571,11 +571,10 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "TeHIR3G4z"
+            "uid": "loki_microservice"
           },
           "editorMode": "builder",
           "expr": "{job=\"microservice\"} |= `` | json",
-          "key": "Q-c46b24f0-005b-4e1f-ab77-fcf29a8148ea-0",
           "queryType": "range",
           "refId": "A"
         }
@@ -599,6 +598,6 @@
   "timezone": "",
   "title": "Drupal",
   "uid": "LNfVlf3nk",
-  "version": 36,
+  "version": 6,
   "weekStart": ""
 }

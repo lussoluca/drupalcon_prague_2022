@@ -1,0 +1,13 @@
+# config file version
+apiVersion: 1
+
+datasources:
+- name: Tempo
+  type: loki
+  enabled: true
+  access: tempo
+  orgId: 1
+  uid: tempo
+  editable: true
+  isDefault: false
+  url: http://tempo:3200

@@ -1,0 +1,19 @@
+# config file version
+apiVersion: 1
+
+datasources:
+- name: Loki-microservice
+  type: loki
+  enabled: true
+  access: proxy
+  orgId: 1
+  uid: loki_microservice
+  editable: true
+  isDefault: false
+  url: http://loki:3100
+  jsonData:
+    derivedFields:
+      - datasourceUid: tempo
+        matcherRegex: "{.*\"traceId\":\"(.*)\"}"
+        name: TraceID
+        url: ${__value.raw}

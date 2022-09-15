@@ -1,5 +1,5 @@
-name: drupal10
-type: drupal9
+name: drupalcon-prague-2022
+type: drupal10
 docroot: "web"
 php_version: "8.1"
 webserver_type: nginx-fpm

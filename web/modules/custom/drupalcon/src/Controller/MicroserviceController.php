@@ -22,7 +22,7 @@ class MicroserviceController extends ControllerBase {
 
   public function view() {
     try {
-      $response = $this->httpClient->get('http://ddev-drupal10-microservice:8080/hello-instrumented');
+      $response = $this->httpClient->get('http://ddev-drupalcon-prague-2022-microservice:8080/hello-instrumented');
       $json = json_decode($response->getBody()->getContents());
       $this->getLogger('drupalcon')->notice($json->message);
 
