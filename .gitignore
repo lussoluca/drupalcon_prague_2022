@@ -1,9 +1,13 @@
 .vscode
 .ddev/o11y/grafana/data
+!.ddev/o11y/grafana/data/.gitkeep
 .ddev/o11y/loki/data
+!.ddev/o11y/loki/data/.gitkeep
 .ddev/o11y/loki/positions.yaml
 .ddev/o11y/prometheus/data
+!.ddev/o11y/prometheus/data/.gitkeep
 .ddev/o11y/tempo/data
+!.ddev/o11y/tempo/data/.gitkeep
 microservice/logs/*.log
 vendor
 web/core
