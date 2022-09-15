@@ -1,5 +1,12 @@
 # Code repository for the talk "Do you know what your Drupal is doing? Observe it" at DrupalCon Prague 2022
 
+## Requirements
+
+- Docker
+- [DDEV](https://ddev.com/)
+
+The stack has been tested on macOS and Linux (maybe it should work on Windows wsl2 too, but I haven't tested it).
+
 ## Install instructions
 
 ### Clone repo
