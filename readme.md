@@ -64,3 +64,16 @@ give permission to anonymous user to "Access site metrics in Prometheus text for
 
 ### Go to dashboard
 https://drupalcon-prague-2022.ddev.site:3001
+
+## Load test
+
+To see the dashboard in action, you can run a load test with [k6](https://k6.io/).
+
+### Install k6
+See https://k6.io/docs/getting-started/installation/
+
+### Run load test
+```bash
+cd k6
+k6 run script.js
+```
