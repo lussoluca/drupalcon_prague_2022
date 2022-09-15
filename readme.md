@@ -3,35 +3,35 @@
 ## Install instructions
 
 ### Clone repo
-```
+```bash
 git clone git@github.com:lussoluca/drupalcon_prague_2022.git
 cd drupalcon_prague_2022
 ```
 
 ### Fix folder permission
-```
+```bash
 chmod 777 .ddev/o11y/grafana/data
 chmod 777 .ddev/o11y/prometheus/data
 chmod 777 .ddev/o11y/loki/data
 ```
 
 ### Start ddev
-```
+```bash
 ddev start
 ```
 
 ### Download dependencies
-```
+```bash
 ddev composer install
 ```
 
 ### Install site
-```
+```bash
 ddev drush -y si demo_umami --account-pass=admin
 ```
 
 ### Enable relevant modules
-```
+```bash
 ddev drush -y pm:enable monolog webprofiler o11y_traces o11y_metrics o11y_metrics_requests drupalcon
 ```
 
