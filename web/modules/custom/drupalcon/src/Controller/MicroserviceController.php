@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\devdays\Controller;
+namespace Drupal\drupalcon\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use GuzzleHttp\Client;
@@ -24,7 +24,7 @@ class MicroserviceController extends ControllerBase {
     try {
       $response = $this->httpClient->get('http://ddev-drupal10-microservice:8080/hello-instrumented');
       $json = json_decode($response->getBody()->getContents());
-      $this->getLogger('devdays')->notice($json->message);
+      $this->getLogger('drupalcon')->notice($json->message);
 
       $this->someComplexMethod();
 
@@ -57,9 +57,9 @@ class MicroserviceController extends ControllerBase {
       ['someAttribute' => 'someValue']
     );
 
-    $this->getLogger('devdays')->info('someComplexMethod start');
+    $this->getLogger('drupalcon')->info('someComplexMethod start');
     sleep(1);
-    $this->getLogger('devdays')->info('someComplexMethod start');
+    $this->getLogger('drupalcon')->info('someComplexMethod start');
 
     $tracer->stop($span);
   }

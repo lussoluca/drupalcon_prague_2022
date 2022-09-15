@@ -1,15 +1,15 @@
-devdays.view:
+drupalcon.view:
   path: '/microservice'
   defaults:
-    _controller: '\Drupal\devdays\Controller\MicroserviceController::view'
+    _controller: '\Drupal\drupalcon\Controller\MicroserviceController::view'
     _title: 'Microservice'
   requirements:
     _access: 'TRUE'
 
-devdays.error:
+drupalcon.error:
   path: '/error'
   defaults:
-    _controller: '\Drupal\devdays\Controller\ErrorController::view'
+    _controller: '\Drupal\drupalcon\Controller\ErrorController::view'
     _title: 'Error'
   requirements:
     _access: 'TRUE'

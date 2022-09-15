@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_cron().
+ */
+function drupalcon_cron() {
+  \Drupal::logger('drupalcon')->notice('test');
+}

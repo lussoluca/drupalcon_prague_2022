@@ -1,5 +1,0 @@
-type: module
-name: DevDays
-description: 'DevDays example module.'
-package: Development
-core_version_requirement: ^10

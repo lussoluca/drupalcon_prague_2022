@@ -1,0 +1,5 @@
+type: module
+name: DrupalCon Prague 2022
+description: 'DrupalCon Prague 2022 example module.'
+package: Development
+core_version_requirement: ^10

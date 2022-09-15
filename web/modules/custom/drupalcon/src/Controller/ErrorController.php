@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\devdays\Controller;
+namespace Drupal\drupalcon\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
 class ErrorController extends ControllerBase {
 
   public function view() {
-    \Drupal::logger('devdays')->error('ErrorController::view()');
+    \Drupal::logger('drupalcon')->error('ErrorController::view()');
 
     return [
       '#cache' => [
