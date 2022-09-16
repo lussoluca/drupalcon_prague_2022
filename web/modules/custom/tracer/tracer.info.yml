@@ -1,7 +1,0 @@
-name: Tracer
-type: module
-description: 'Alter core services to allow to trace them.'
-package: Development
-core_version_requirement: ^10
-tags:
-  - developer

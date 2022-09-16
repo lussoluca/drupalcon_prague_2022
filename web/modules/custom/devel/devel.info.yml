@@ -1,9 +1,0 @@
-type: module
-name: Devel
-description: 'Various blocks, pages, and functions for developers.'
-package: Development
-core_version_requirement: ^10
-php: 8.1
-configure: devel.admin_settings
-tags:
- - developer

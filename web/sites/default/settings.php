@@ -792,7 +792,7 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && is_readable($ddev_settings)) {
   require $ddev_settings;
 }
 
-$class_loader->addPsr4('Drupal\\tracer\\', [ __DIR__ . '/../../modules/custom/tracer/src']);
+$class_loader->addPsr4('Drupal\\tracer\\', [ __DIR__ . '/../../modules/contrib/tracer/src']);
 $settings['container_base_class'] = '\Drupal\tracer\DependencyInjection\TraceableContainer';
 
 $settings['tracer_plugin'] = 'o11y_tracer';
