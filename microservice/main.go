@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"net/http"
-	"time"
 	"fmt"
-  "os"
+	"net/http"
+	"os"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
@@ -72,7 +72,7 @@ func sleepy(ctx context.Context) {
 	}).Info("End complex work")
 }
 
-func httpHandler(w http.ResponseWriter, r *http.Request) {
+func endpoint1(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	resp := make(map[string]string)
@@ -87,8 +87,18 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	sleepy(ctx)
 }
 
+func endpoint2(w http.ResponseWriter, r *http.Request) {
+	span := trace.SpanFromContext(r.Context())
+	spanContext := span.SpanContext()
+	log.WithFields(log.Fields{
+		"traceId": spanContext.TraceID().String(),
+	}).Error("Endpoint 2 is not implemented yet.")
+
+	w.WriteHeader(404)
+}
+
 func main() {
-  logFile := "logs/microservice.log"
+	logFile := "logs/microservice.log"
 	f, err := os.OpenFile(logFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("Failed to create logfile" + logFile)
@@ -100,12 +110,17 @@ func main() {
 
 	// Only log the debug severity or above
 	log.SetLevel(log.DebugLevel)
-  log.SetFormatter(&log.JSONFormatter{})
+	log.SetFormatter(&log.JSONFormatter{})
 
-	// Wrap your httpHandler function.
-	handler := http.HandlerFunc(httpHandler)
-	wrappedHandler := otelhttp.NewHandler(handler, "hello-instrumented")
-	http.Handle("/hello-instrumented", wrappedHandler)
+	// Endpoint 1
+	endpoint1Handler := http.HandlerFunc(endpoint1)
+	endpoint1wrappedHandler := otelhttp.NewHandler(endpoint1Handler, "endpoint1")
+	http.Handle("/endpoint1", endpoint1wrappedHandler)
+
+	// Endpoint 2
+	endpoint2Handler := http.HandlerFunc(endpoint2)
+	endpoint2WrappedHandler := otelhttp.NewHandler(endpoint2Handler, "endpoint2")
+	http.Handle("/endpoint2", endpoint2WrappedHandler)
 
 	// And start the HTTP serve.
 	log.Fatal(http.ListenAndServe(":8080", nil))

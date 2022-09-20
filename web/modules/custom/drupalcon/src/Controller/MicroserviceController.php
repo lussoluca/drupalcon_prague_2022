@@ -20,26 +20,55 @@ class MicroserviceController extends ControllerBase {
     $this->httpClient = $httpClient;
   }
 
-  public function view() {
+  public function endpoint1() {
     try {
-      $response = $this->httpClient->get('http://ddev-drupalcon-prague-2022-microservice:8080/hello-instrumented');
+      $response = $this->httpClient->get('http://ddev-drupalcon-prague-2022-microservice:8080/endpoint1');
       $json = json_decode($response->getBody()->getContents());
       $this->getLogger('drupalcon')->notice($json->message);
 
       $this->someComplexMethod();
 
       return [
-        '#type' => 'markup',
-        '#markup' => $json->message,
+        '#theme' => 'microservice',
+        '#message' => $json->message,
         '#cache' => [
           'max-age' => 0,
         ],
       ];
     }
     catch (\Exception $e) {
+      $this->getLogger('drupalcon')->notice($e->getMessage());
+
       return [
-        '#type' => 'markup',
-        '#markup' => $e->getMessage(),
+        '#theme' => 'microservice',
+        '#message' => $this->t('Some error occurred, please try again later.'),
+        '#cache' => [
+          'max-age' => 0,
+        ],
+      ];
+    }
+  }
+
+  public function endpoint2() {
+    try {
+      $response = $this->httpClient->get('http://ddev-drupalcon-prague-2022-microservice:8080/endpoint2');
+      $json = json_decode($response->getBody()->getContents());
+      $this->getLogger('drupalcon')->notice($json->message);
+
+      return [
+        '#theme' => 'microservice',
+        '#message' => $json->message,
+        '#cache' => [
+          'max-age' => 0,
+        ],
+      ];
+    }
+    catch (\Exception $e) {
+      $this->getLogger('drupalcon')->notice($e->getMessage());
+
+      return [
+        '#theme' => 'microservice',
+        '#message' => $this->t('Some error occurred, please try again later.'),
         '#cache' => [
           'max-age' => 0,
         ],

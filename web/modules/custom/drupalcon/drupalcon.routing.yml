@@ -1,7 +1,15 @@
-drupalcon.view:
-  path: '/microservice'
+drupalcon.endpoint1:
+  path: '/microservice1'
   defaults:
-    _controller: '\Drupal\drupalcon\Controller\MicroserviceController::view'
+    _controller: '\Drupal\drupalcon\Controller\MicroserviceController::endpoint1'
+    _title: 'Microservice'
+  requirements:
+    _access: 'TRUE'
+
+drupalcon.endpoint2:
+  path: '/microservice2'
+  defaults:
+    _controller: '\Drupal\drupalcon\Controller\MicroserviceController::endpoint2'
     _title: 'Microservice'
   requirements:
     _access: 'TRUE'

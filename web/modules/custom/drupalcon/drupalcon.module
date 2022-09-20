@@ -6,3 +6,16 @@
 function drupalcon_cron() {
   \Drupal::logger('drupalcon')->notice('test');
 }
+
+/**
+ * Implements hook_theme().
+ */
+function drupalcon_theme() {
+  return [
+    'microservice' => [
+      'variables' => [
+        'message' => NULL,
+      ],
+    ],
+  ];
+}
